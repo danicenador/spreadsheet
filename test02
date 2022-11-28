@@ -1,0 +1,26 @@
+package ARQSOFT;
+
+import java.util.ArrayList;
+
+public class Main {
+
+    public static void main(String[] args) {
+        SystemController sis = new SystemController();
+
+
+        sis.spreadsheet.modifyCellContent("A1","=2/5");
+        sis.spreadsheet.modifyCellContent("B2","86");
+        sis.spreadsheet.modifyCellContent("A2","89df89sdf");
+        System.out.println(sis.spreadsheet.findCellAndReturn("B2").numericalValue()*2 );
+        System.out.println(sis.spreadsheet.findCellAndReturn("A1").numericalValue());
+
+
+        ArrayList<String> spreadsheet=sis.spreadsheet.showSpreadsheetContent();
+        for (String s:spreadsheet){
+            System.out.println(s);
+        }
+
+
+    }
+
+}

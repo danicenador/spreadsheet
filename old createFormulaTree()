@@ -1,0 +1,28 @@
+public void createFormulaTree(){
+        String formula=getContent().substring(1);
+        int i = 0;
+        LinkedList<String> values = new LinkedList<>();
+        LinkedList<String> operators = new LinkedList<>();
+        String number = "";
+        while (i < formula.length()){
+            if (IsDouble(formula.substring(i,i+1))){
+                number+=formula.substring(i,i+1);
+            }else{
+                values.add(number);
+                operators.add(formula.substring(i,i+1));
+                number = "";
+            }
+            i=i+1;
+        }
+        values.add(number);
+
+        OperationOperator tree = new OperationOperator();
+        for(String operator:operators){
+            tree.setOperator(operators.pollLast());
+            OperationInterface[] leaves = new OperationInterface[2];
+            leaves[0]= new OperationNumber(Double.parseDouble(values.pollLast()));
+            leaves[1]= new OperationNumber(Double.parseDouble(values.pollLast()));
+            tree.setLeaves(leaves);
+        }
+        this.tree=tree;
+    }

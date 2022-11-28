@@ -1,0 +1,28 @@
+package ARQSOFT;
+
+import java.util.ArrayList;
+
+public class Main {
+
+    public static void main(String[] args) {
+        SystemController sis = new SystemController();
+
+
+        //int[] a = sis.spreadsheet.coordinateTranslator("C5");
+        sis.spreadsheet.modifyCellContent("A1","A1");
+        sis.spreadsheet.modifyCellContent("A10","A10");
+        sis.spreadsheet.modifyCellContent("AA1","AA1");
+        sis.spreadsheet.modifyCellContent("J8","J8");
+        sis.saveManager.saveSpreadsheet(sis.spreadsheet,"save.s2v");
+
+        sis.spreadsheet=sis.saveManager.loadSpreadsheet("load.s2v");
+
+        ArrayList<String> spreadsheet=sis.spreadsheet.showSpreadsheetContent();
+        for (String s:spreadsheet){
+            System.out.println(s);
+        }
+
+
+    }
+
+}
