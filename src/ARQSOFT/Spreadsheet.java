@@ -8,13 +8,25 @@ import static ARQSOFT.FormulaParser.IsInteger;
 
 public class Spreadsheet {
     // Attributes
+    private static Spreadsheet instance;
     private ArrayList<ArrayList<Cell>> cells = new ArrayList<ArrayList<Cell> >();
     //                  Rows   Columns
     private int rowsNumber=0;
     private int columnsNumber=0;
 
-    // Methods
+    // Constructor and getInstance()
+    private Spreadsheet(){}
+    public static Spreadsheet GetInstance(){
+        if(instance==null){
+            instance = new Spreadsheet();
+        }
+        return instance;
+    }
 
+    // Methods
+    public void reset(){
+        instance = new Spreadsheet();
+    }
     public int[] coordinateTranslator(String coordinates){ // AS20 -> [column,row]
         int[] toReturn = new int[2];
         int i = 0;
@@ -113,6 +125,7 @@ public class Spreadsheet {
 
     public Cell findCellAndReturn(String coordinates){ // gets the cell class by coordinates
         int[] coord = coordinateTranslator(coordinates); // [column,row]
+        addRowsColums(coord);
         return cells.get(coord[1]-1).get(coord[0]-1);
         //               row             column
     }
@@ -134,7 +147,7 @@ public class Spreadsheet {
         ArrayList<String> toReturn = new ArrayList<>();
         for (ArrayList<Cell> rows:cells){
             for (Cell cell:rows){
-                toReturn.add(cell.getCoordinates().toUpperCase() +": "+cell.textValue(spreadsheet));
+                toReturn.add(cell.getCoordinates().toUpperCase() +": "+cell.textValue());
             }
         }
         return toReturn;

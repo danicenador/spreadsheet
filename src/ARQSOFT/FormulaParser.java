@@ -6,18 +6,26 @@ public class FormulaParser {
     // Methods
 
     public static boolean IsDouble(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch (NumberFormatException e) {
+        if (str!=null){
+            try {
+                Double.parseDouble(str);
+                return true;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }else{
             return false;
         }
     }
     public static boolean IsInteger(String str) {
-        try {
-            Integer.parseInt(str);
-            return true;
-        } catch (NumberFormatException e) {
+        if (str != null) {
+            try {
+                Integer.parseInt(str);
+                return true;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }else{
             return false;
         }
     }
@@ -32,27 +40,23 @@ public class FormulaParser {
     public static boolean IsCoordinates(String coordinates){
         boolean toReturn = true;
         int i = 0;
-        for (char ch: coordinates.toCharArray()) {
-            if (Character.isDigit(ch)){
-                break;
-            }else{
-                i++;
+        if (coordinates!=null) {
+            for (char ch : coordinates.toCharArray()) {
+                if (!Character.isLetter(ch)) {
+                    break;
+                } else {
+                    i++;
+                }
             }
-        }
-        if (i==0){
-            toReturn=false;
-        }
-        if (!IsInteger(coordinates.substring(i))){
-            toReturn=false;
+            if (i == 0) {
+                toReturn = false;
+            }
+            if (!IsInteger(coordinates.substring(i))) {
+                toReturn = false;
+            }
+        }else{
+            toReturn = false;
         }
         return toReturn;
     }
-
-    public void processFormula(){}
-    public void dependencyUpdate(){}
-    public void circularDependencyDetection(){}
-    public void suma(){}
-    public void max(){}
-    public void min(){}
-    public void promedio(){}
 }

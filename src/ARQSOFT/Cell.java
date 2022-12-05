@@ -14,10 +14,10 @@ public class Cell {
     // Methods
     public void textContent(){}
     public void numericalContent(){}
-    public String textValue(Spreadsheet spreadsheet){
+    public String textValue( ){
         return "";
     }
-    public double numericalValue(Spreadsheet spreadsheet){
+    public double numericalValue( ){
         return 0;
     }
 

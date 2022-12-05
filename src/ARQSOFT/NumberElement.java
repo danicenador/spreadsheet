@@ -1,16 +1,16 @@
 package ARQSOFT;
 
-public class OperationNumber implements OperationInterface{
+public class NumberElement implements FormulaTree {
     // Attributes
     private double number;
 
     // Constructor
-    public OperationNumber(double number){
+    public NumberElement(double number){
         this.number=number;
     }
     // Method
     @Override
-    public double getValue(Spreadsheet spreadsheet){
+    public double getValue(){
         return number;
     };
 

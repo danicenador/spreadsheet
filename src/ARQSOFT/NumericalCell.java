@@ -13,11 +13,11 @@ public class NumericalCell extends Cell{
 
     // Methods
     @Override
-    public String textValue(Spreadsheet spreadsheet){
+    public String textValue( ){
         return value+"";
     }
     @Override
-    public double numericalValue(Spreadsheet spreadsheet){
+    public double numericalValue( ){
         return value;
     }
 

@@ -30,7 +30,8 @@ public class SaveManager {
         return toReturn;
     }
     public Spreadsheet loadSpreadsheet(String fileName){
-        Spreadsheet spreadsheet = new Spreadsheet();
+        Spreadsheet spreadsheet = Spreadsheet.GetInstance();
+        spreadsheet.reset();
         try {
             FileReader reader = new FileReader(fileName);
             int[] coordinates=new int[2];
