@@ -10,7 +10,7 @@ public class test {
         sis.spreadsheet.modifyCellContent("A1","=C3+1");
         sis.spreadsheet.modifyCellContent("C3","2");
 
-        java.lang.System.out.println(FormulaParser.IsCoordinates("=A1"));
+        java.lang.System.out.println(Checker.IsCoordinates("=A1"));
 
 
 

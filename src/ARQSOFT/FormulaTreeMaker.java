@@ -9,6 +9,13 @@ public class FormulaTreeMaker {
         } else if (formula.equals("=A1")) {
             tree= new CellElement(formula.substring(1));
 
+        }else if (formula.equals("=PROMEDIO(5;7;28)")) {
+            FormulaTree[] inputs = new FormulaTree[3];
+            inputs[0]=new NumberElement(5);
+            inputs[1]=new NumberElement(7);
+            inputs[2]=new NumberElement(28);
+            tree= new Promedio(inputs);
+
         }
 
         return tree;

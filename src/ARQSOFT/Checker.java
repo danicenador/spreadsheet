@@ -2,7 +2,7 @@ package ARQSOFT;
 
 import java.io.File;
 
-public class FormulaParser {
+public class Checker {
     // Methods
 
     public static boolean IsDouble(String str) {

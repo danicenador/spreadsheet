@@ -3,8 +3,7 @@ package ARQSOFT;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static ARQSOFT.FormulaParser.IsDouble;
-import static ARQSOFT.FormulaParser.IsInteger;
+import static ARQSOFT.Checker.*;
 
 public class Spreadsheet {
     // Attributes

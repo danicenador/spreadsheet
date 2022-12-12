@@ -2,7 +2,7 @@ package ARQSOFT;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import static ARQSOFT.FormulaParser.*;
+import static ARQSOFT.Checker.*;
 
 public class Main {
     // Attributes

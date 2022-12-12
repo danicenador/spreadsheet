@@ -2,7 +2,7 @@ package ARQSOFT;
 
 import java.util.LinkedList;
 
-import static ARQSOFT.FormulaParser.*;
+import static ARQSOFT.Checker.*;
 
 
 public class FormulaCell extends Cell{
