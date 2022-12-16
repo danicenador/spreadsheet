@@ -1,20 +1,28 @@
 package ARQSOFT;
 
-import java.util.LinkedList;
+import FormulaComposite.FormulaTree;
+import parser.AbstractNode;
+import parser.ExpressionBuilder;
 
-import static ARQSOFT.Checker.*;
+import java.util.List;
 
 
 public class FormulaCell extends Cell{
     // Attributes
     private FormulaTree tree;
+    private List<String> references;
 
     // Constructor
     public FormulaCell(String coordinates, String content){
         this.setCoordinates(coordinates);
         this.setContent(content);
-        FormulaTreeMaker FTM = new FormulaTreeMaker();
-        tree = FTM.createFormulaTree(content);
+        Factory factory = new Factory();
+        ExpressionBuilder builder = new ExpressionBuilder(factory);
+        builder.buildExpression(content.substring(1));
+        AbstractNode expression = builder.getExpression();
+        List<String> references = builder.getCellReferences();
+        this.references=references;
+        this.tree=(FormulaTree) expression;
     }
 
     // Methods

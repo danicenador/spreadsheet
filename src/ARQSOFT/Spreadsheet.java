@@ -2,7 +2,6 @@ package ARQSOFT;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
 import static ARQSOFT.Checker.*;
 
 public class Spreadsheet {
@@ -119,7 +118,6 @@ public class Spreadsheet {
             cells.get(coord[1]-1).set(coord[0]-1,new TextCell(coordinates, content));
 
         }
-
     }
 
     public Cell findCellAndReturn(String coordinates){ // gets the cell class by coordinates
