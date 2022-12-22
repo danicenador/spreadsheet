@@ -1,10 +1,13 @@
 package impl;
 
+import ARQSOFT.Spreadsheet;
 import ARQSOFT.SystemController;
+import ARQSOFT.Utilities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static ARQSOFT.Checker.IsCoordinates;
+import static ARQSOFT.Utilities.IsCoordinates;
+import static ARQSOFT.Utilities.CoordinateTranslator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SystemTest {
@@ -22,14 +25,14 @@ class SystemTest {
         int[]b = new int[2];
         b[0]=5;
         b[1]=5;
-        String a = SC.spreadsheet.coordinateTranslator(b);
+        String a = Utilities.CoordinateTranslator(b);
         assertEquals("E5",a);
-        assertEquals(b[0],SC.spreadsheet.coordinateTranslator(a)[0]);
-        assertEquals(b[1],SC.spreadsheet.coordinateTranslator(a)[1]);
+        assertEquals(b[0], CoordinateTranslator(a)[0]);
+        assertEquals(b[1], CoordinateTranslator(a)[1]);
         String c = "UVWXYZ5879";
         assertEquals(true, IsCoordinates(c));
-        int[] d = SC.spreadsheet.coordinateTranslator(c);
-        assertEquals(SC.spreadsheet.coordinateTranslator(d),c);
+        int[] d = CoordinateTranslator(c);
+        assertEquals(Utilities.CoordinateTranslator(d),c);
         assertEquals(false, IsCoordinates("This is any string"));
         assertEquals(false, IsCoordinates("1A1"));
         assertEquals(false, IsCoordinates("DF5.7"));
@@ -53,6 +56,20 @@ class SystemTest {
         SC.spreadsheet.modifyCellContent("A1","");
         assertEquals("", SC.spreadsheet.findCellAndReturn("A1").textValue());
         assertEquals(0, SC.spreadsheet.findCellAndReturn("A1").numericalValue());
+    }
+    @Test
+    void test3() {  // Create cells
+        SC.saveManager.loadSpreadsheet("./test01");
+        SC.spreadsheet= Spreadsheet.GetInstance();
+        assertEquals(3, SC.spreadsheet.findCellAndReturn("a1").numericalValue());
+        assertEquals(8, SC.spreadsheet.findCellAndReturn("b1").numericalValue());
+        assertEquals(64, SC.spreadsheet.findCellAndReturn("c1").numericalValue());
+        assertEquals(11, SC.spreadsheet.findCellAndReturn("d1").numericalValue());
+        assertEquals(64, SC.spreadsheet.findCellAndReturn("a2").numericalValue());
+        assertEquals(3, SC.spreadsheet.findCellAndReturn("b2").numericalValue());
+        assertEquals(86, SC.spreadsheet.findCellAndReturn("c2").numericalValue());
+        assertEquals(21.5, SC.spreadsheet.findCellAndReturn("d2").numericalValue());
+
     }
 
 }

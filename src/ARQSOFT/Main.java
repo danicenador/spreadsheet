@@ -2,7 +2,7 @@ package ARQSOFT;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import static ARQSOFT.Checker.*;
+import static ARQSOFT.Utilities.*;
 
 public class Main {
     // Attributes
@@ -35,7 +35,7 @@ public class Main {
         java.lang.System.out.println("______________________________________________");
         java.lang.System.out.println("Input save file path:");
         String path = scanner.nextLine();
-        sis.saveManager.saveSpreadsheet(sis.spreadsheet,path);
+        sis.saveManager.saveSpreadsheet(path);
         java.lang.System.out.println(ANSI_GREEN + "Spreadsheet successfully saved at: "+path + ANSI_RESET);
     }
     private void loadSpreadsheet(){
@@ -44,7 +44,8 @@ public class Main {
         java.lang.System.out.println("Input existing save file path:");
         String path = scanner.nextLine();
         if(FileExists(path)){
-            sis.spreadsheet=sis.saveManager.loadSpreadsheet(path);
+            sis.saveManager.loadSpreadsheet(path);
+            sis.spreadsheet=Spreadsheet.GetInstance();
             java.lang.System.out.println(ANSI_GREEN + "Spreadsheet successfully loaded" + ANSI_RESET);
         }else{
             java.lang.System.out.println(ANSI_RED + "Save file not found" + ANSI_RESET);
@@ -87,7 +88,7 @@ public class Main {
         }
     }
     public void showSpreadsheet(){
-        ArrayList<String> spreadsheet=sis.spreadsheet.showSpreadsheetValue(sis.spreadsheet);
+        ArrayList<String> spreadsheet=sis.spreadsheet.showSpreadsheetValue();
         for (String s:spreadsheet){
             System.out.println(s);
         }

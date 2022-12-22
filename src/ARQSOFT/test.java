@@ -1,17 +1,11 @@
 package ARQSOFT;
 
-import java.util.ArrayList;
-
 public class test {
 
     public static void main(String[] args) {
-        SystemController sis = new SystemController();
-
-        sis.spreadsheet.modifyCellContent("A1","=C3+1");
-        sis.spreadsheet.modifyCellContent("C3","2");
-
-        java.lang.System.out.println(Checker.IsCoordinates("=A1"));
-
+        String a = "11\r";
+        double b = Double.parseDouble(a);
+        System.out.println(a.charAt(2)=='\r');
 
 
 
