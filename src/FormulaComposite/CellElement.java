@@ -1,6 +1,6 @@
 package FormulaComposite;
 
-import ARQSOFT.Spreadsheet;
+import MainPackage.Spreadsheet;
 
 public class CellElement implements FormulaTree {
     // Attributes

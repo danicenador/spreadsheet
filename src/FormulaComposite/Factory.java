@@ -1,4 +1,4 @@
-package ARQSOFT;
+package FormulaComposite;
 
 import FormulaComposite.*;
 import parser.AbstractFactory;

@@ -1,14 +1,11 @@
-package ARQSOFT;
+package MainPackage;
 
 public class test {
 
     public static void main(String[] args) {
-        String a = "11\r";
+        String a = "-5";
         double b = Double.parseDouble(a);
-        System.out.println(a.charAt(2)=='\r');
-
-
-
+        System.out.println(b);
     }
 
 }

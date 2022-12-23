@@ -1,9 +1,9 @@
-package ARQSOFT;
+package MainPackage;
 
 import java.util.ArrayList;
 
-import static ARQSOFT.Utilities.IsDouble;
-import static ARQSOFT.Utilities.CoordinateTranslator;
+import static MainPackage.Utilities.IsDouble;
+import static MainPackage.Utilities.CoordinateTranslator;
 
 public class Spreadsheet {
     // Attributes
@@ -66,16 +66,22 @@ public class Spreadsheet {
         int[] coord = CoordinateTranslator(coordinates); // [column,row]
         addRowsColums(coord);  // creates rows and columns if the spreadsheet is not big enough
         Cell tmp = findCellAndReturn(coordinates); // returns the cell in that coordinates
+        if (tmp instanceof FormulaCell){
+            FormulaCell tmpFC = (FormulaCell) tmp;
+            tmpFC.removeSubscriptions();
+        }
         if (content.equals("")){
-            cells.get(coord[1]-1).set(coord[0]-1,new Cell(coordinates));
+            cells.get(coord[1]-1).set(coord[0]-1,new Cell(coordinates,tmp.getSubscribers()));
+            cells.get(coord[1]-1).get(coord[0]-1).notifySubscribers();
         }else if (IsDouble(content)){  // if content is a number, creates a numerical cell
-            cells.get(coord[1]-1).set(coord[0]-1,new NumericalCell(coordinates, content));
+            cells.get(coord[1]-1).set(coord[0]-1,new NumericalCell(coordinates, content,tmp.getSubscribers()));
+            cells.get(coord[1]-1).get(coord[0]-1).notifySubscribers();
         }else if(content.charAt(0) == '='){
-            FormulaCell tmpFormulaCell = new FormulaCell(coordinates, content);
-            cells.get(coord[1]-1).set(coord[0]-1,tmpFormulaCell);
+            cells.get(coord[1]-1).set(coord[0]-1,new FormulaCell(coordinates, content,tmp.getSubscribers()));
+            cells.get(coord[1]-1).get(coord[0]-1).notifySubscribers();
         }else{
-            cells.get(coord[1]-1).set(coord[0]-1,new TextCell(coordinates, content));
-
+            cells.get(coord[1]-1).set(coord[0]-1,new TextCell(coordinates, content,tmp.getSubscribers()));
+            cells.get(coord[1]-1).get(coord[0]-1).notifySubscribers();
         }
     }
 

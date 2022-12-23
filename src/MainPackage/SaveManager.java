@@ -1,10 +1,10 @@
-package ARQSOFT;
+package MainPackage;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static ARQSOFT.Utilities.CoordinateTranslator;
+import static MainPackage.Utilities.CoordinateTranslator;
 
 
 public class SaveManager {

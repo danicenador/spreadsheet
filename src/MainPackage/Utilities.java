@@ -1,4 +1,4 @@
-package ARQSOFT;
+package MainPackage;
 
 import java.io.File;
 import java.util.ArrayList;

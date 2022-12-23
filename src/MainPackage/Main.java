@@ -1,8 +1,8 @@
-package ARQSOFT;
+package MainPackage;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import static ARQSOFT.Utilities.*;
+import static MainPackage.Utilities.*;
 
 public class Main {
     // Attributes

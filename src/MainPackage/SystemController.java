@@ -1,4 +1,4 @@
-package ARQSOFT;
+package MainPackage;
 
 public class SystemController {
     // Attributes

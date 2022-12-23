@@ -1,13 +1,16 @@
-package ARQSOFT;
+package MainPackage;
+
+import java.util.ArrayList;
 
 public class NumericalCell extends Cell{
     // Attributes
     private double value;
 
     // Constructor
-    public NumericalCell(String coordinates, String content){
+    public NumericalCell(String coordinates, String content, ArrayList<Observer> subscribers){
         this.setCoordinates(coordinates);
         this.setContent(content);
+        this.subscribers=subscribers;
         value=Double.parseDouble(content);
     }
 
