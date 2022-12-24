@@ -18,6 +18,8 @@ class SystemTest {
     @BeforeEach
     void doSetup() {
         SC = new SystemController();
+        SC.spreadsheet.reset();
+        SC.spreadsheet=Spreadsheet.GetInstance();
     }
 
     @Test
@@ -59,7 +61,7 @@ class SystemTest {
     }
     @Test
     void test3() {  // Formula tree
-        SC.saveManager.loadSpreadsheet("./test01");
+        SC.saveManager.loadSpreadsheet("./test/test01");
         SC.spreadsheet= Spreadsheet.GetInstance();
         assertEquals(3, SC.spreadsheet.findCellAndReturn("a1").numericalValue());
         assertEquals(8, SC.spreadsheet.findCellAndReturn("b1").numericalValue());
@@ -73,7 +75,7 @@ class SystemTest {
 
     @Test
     void test4() {  // Observers
-        SC.saveManager.loadSpreadsheet("./test02");
+        SC.saveManager.loadSpreadsheet("./test/test02");
         SC.spreadsheet= Spreadsheet.GetInstance();
         assertEquals(1111, SC.spreadsheet.findCellAndReturn("a2").numericalValue());
         SC.spreadsheet.modifyCellContent("a1","2");
@@ -84,6 +86,37 @@ class SystemTest {
         assertEquals(1222, SC.spreadsheet.findCellAndReturn("a2").numericalValue());
         SC.spreadsheet.modifyCellContent("d1","2000");
         assertEquals(2222, SC.spreadsheet.findCellAndReturn("a2").numericalValue());
+    }
+
+    @Test
+    void test5() {  // Circular dependency
+        SC.spreadsheet.modifyCellContent("a1","=a1");
+        assertEquals("Err", SC.spreadsheet.findCellAndReturn("a1").textValue());
+
+        SC.spreadsheet.reset();
+        SC.spreadsheet = Spreadsheet.GetInstance();
+        SC.spreadsheet.modifyCellContent("a1","=a2");
+        SC.spreadsheet.modifyCellContent("a2","=a1");
+        assertEquals("Err", SC.spreadsheet.findCellAndReturn("a2").textValue());
+        assertEquals("Err", SC.spreadsheet.findCellAndReturn("a1").textValue());
+
+        SC.spreadsheet.reset();
+        SC.spreadsheet = Spreadsheet.GetInstance();
+        SC.spreadsheet.modifyCellContent("a1","5");
+        SC.spreadsheet.modifyCellContent("a2","=a3+958");
+        SC.spreadsheet.modifyCellContent("a3","=a1+a2");
+        assertEquals("Err", SC.spreadsheet.findCellAndReturn("a3").textValue());
+    }
+
+    @Test
+    void test6() {  // empty cell values
+        assertEquals("", SC.spreadsheet.findCellAndReturn("zz498").textValue());
+        assertEquals(0, SC.spreadsheet.findCellAndReturn("zz498").numericalValue());
+        SC.spreadsheet.modifyCellContent("d5","-5");
+        assertEquals("", SC.spreadsheet.findCellAndReturn("a1").textValue());
+        assertEquals(0, SC.spreadsheet.findCellAndReturn("a1").numericalValue());
+        SC.spreadsheet.modifyCellContent("p7","=MAX(g5;d5;aj56;kl23)");
+        assertEquals(0, SC.spreadsheet.findCellAndReturn("p7").numericalValue());
     }
 
 }

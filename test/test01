@@ -1,0 +1,2 @@
+=1+2;=a1+5;=(a1+5)*(4+4);=c1/b1+a1
+=MAX(a1,b1,c1,d1);=MIN(a1,b1,c1,d1);=SUMA(a1,b1,c1,d1);=PROMEDIO(a1,b1,c1,d1)

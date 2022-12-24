@@ -13,7 +13,7 @@ public class FormulaCell extends Cell implements Observer{
     // Attributes
     private FormulaTree tree;
     private List<String> references;
-    private double value;
+    private String value;
 
     // Constructor
     public FormulaCell(String coordinates, String content, ArrayList<Observer> subscribers){
@@ -33,17 +33,38 @@ public class FormulaCell extends Cell implements Observer{
 
     // Methods
     public double numericalValue( ) {
-        return value;
+        return Double.parseDouble(value);
     }
     public String textValue( ){
-        return value+"";
+        return value;
     }
 
     @Override
     public void update() {
-        value=tree.getValue();
+        if (circularDependency(this.coordinates)){
+            value = "Err";
+        }else {
+            value = tree.getValue() + "";
+        }
     }
 
+    public boolean circularDependency(String coordinates){
+        Spreadsheet spreadsheet = Spreadsheet.GetInstance();
+        boolean toReturn = false;
+        for(String c:references){
+            if (c.equals(coordinates)){
+                toReturn = true;
+                break;
+            } else if (spreadsheet.findCellAndReturn(c) instanceof FormulaCell) {
+                FormulaCell cell = (FormulaCell) spreadsheet.findCellAndReturn(c);
+                if (cell.circularDependency(coordinates)){
+                    toReturn = true;
+                    break;
+                }
+            }
+        }
+        return toReturn;
+    }
     public void getSubscriptions(){
         Spreadsheet spreadsheet = Spreadsheet.GetInstance();
         for (String coord:references){
