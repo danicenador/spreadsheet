@@ -86,26 +86,34 @@ class SystemTest {
         assertEquals(1222, SC.spreadsheet.findCellAndReturn("a2").numericalValue());
         SC.spreadsheet.modifyCellContent("d1","2000");
         assertEquals(2222, SC.spreadsheet.findCellAndReturn("a2").numericalValue());
+
+        SC.spreadsheet.modifyCellContent("h1","1");
+        SC.spreadsheet.modifyCellContent("h2","=h1");
+        SC.spreadsheet.modifyCellContent("h3","=h2");
+        assertEquals(1, SC.spreadsheet.findCellAndReturn("h3").numericalValue());
+        SC.spreadsheet.modifyCellContent("h1","2");
+        assertEquals(2, SC.spreadsheet.findCellAndReturn("h3").numericalValue());
+
     }
 
     @Test
     void test5() {  // Circular dependency
         SC.spreadsheet.modifyCellContent("a1","=a1");
-        assertEquals("Err", SC.spreadsheet.findCellAndReturn("a1").textValue());
+        assertEquals("Error Circular Dependency", SC.spreadsheet.findCellAndReturn("a1").textValue());
 
         SC.spreadsheet.reset();
         SC.spreadsheet = Spreadsheet.GetInstance();
         SC.spreadsheet.modifyCellContent("a1","=a2");
         SC.spreadsheet.modifyCellContent("a2","=a1");
-        assertEquals("Err", SC.spreadsheet.findCellAndReturn("a2").textValue());
-        assertEquals("Err", SC.spreadsheet.findCellAndReturn("a1").textValue());
+        assertEquals("Error Circular Dependency", SC.spreadsheet.findCellAndReturn("a2").textValue());
+        assertEquals("Error Circular Dependency", SC.spreadsheet.findCellAndReturn("a1").textValue());
 
         SC.spreadsheet.reset();
         SC.spreadsheet = Spreadsheet.GetInstance();
         SC.spreadsheet.modifyCellContent("a1","5");
         SC.spreadsheet.modifyCellContent("a2","=a3+958");
         SC.spreadsheet.modifyCellContent("a3","=a1+a2");
-        assertEquals("Err", SC.spreadsheet.findCellAndReturn("a3").textValue());
+        assertEquals("Error Circular Dependency", SC.spreadsheet.findCellAndReturn("a3").textValue());
     }
 
     @Test
@@ -117,6 +125,19 @@ class SystemTest {
         assertEquals(0, SC.spreadsheet.findCellAndReturn("a1").numericalValue());
         SC.spreadsheet.modifyCellContent("p7","=MAX(g5;d5;aj56;kl23)");
         assertEquals(0, SC.spreadsheet.findCellAndReturn("p7").numericalValue());
+    }
+
+    @Test
+    void test7() {  // parser errors
+        SC.spreadsheet.modifyCellContent("a1","=f");
+        assertEquals("Error Formula", SC.spreadsheet.findCellAndReturn("a1").textValue());
+        SC.spreadsheet.modifyCellContent("a2","=a1");
+        assertEquals("Error Formula", SC.spreadsheet.findCellAndReturn("a2").textValue());
+        SC.spreadsheet.modifyCellContent("a3","=a2+50");
+        assertEquals("Error Formula", SC.spreadsheet.findCellAndReturn("a3").textValue());
+        SC.spreadsheet.modifyCellContent("a1","5");
+        assertEquals("5.0", SC.spreadsheet.findCellAndReturn("a2").textValue());
+        assertEquals("55.0", SC.spreadsheet.findCellAndReturn("a3").textValue());
     }
 
 }

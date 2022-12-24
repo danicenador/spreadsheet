@@ -1,6 +1,5 @@
 package FormulaComposite;
 
-import FormulaComposite.*;
 import parser.AbstractFactory;
 import parser.AbstractNode;
 
@@ -55,11 +54,8 @@ public class Factory implements AbstractFactory {
         };
     }
 
-
-
     @Override
     public AbstractNode buildError(String detail) {
-        return new AbstractNode() {
-        };
+        return new ErrorTree();
     }
 }

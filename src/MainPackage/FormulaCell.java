@@ -1,5 +1,6 @@
 package MainPackage;
 
+import FormulaComposite.ErrorTree;
 import FormulaComposite.Factory;
 import FormulaComposite.FormulaTree;
 import parser.AbstractNode;
@@ -21,14 +22,20 @@ public class FormulaCell extends Cell implements Observer{
         this.content=content;
         this.subscribers=subscribers;
         Factory factory = new Factory();
-        ExpressionBuilder builder = new ExpressionBuilder(factory);
-        builder.buildExpression(content.substring(1));
-        AbstractNode expression = builder.getExpression();
-        List<String> references = builder.getCellReferences();
-        this.references=references;
-        this.tree=(FormulaTree) expression;
-        getSubscriptions();
-        update();
+        try {
+            ExpressionBuilder builder = new ExpressionBuilder(factory);
+            builder.buildExpression(content.substring(1));
+            AbstractNode expression = builder.getExpression();
+            List<String> references = builder.getCellReferences();
+            this.references = references;
+            this.tree = (FormulaTree) expression;
+            getSubscriptions();
+            update();
+        }catch (NullPointerException e){
+            this.references = new ArrayList<>();
+            this.tree = new ErrorTree();
+            update();
+        }
     }
 
     // Methods
@@ -41,10 +48,26 @@ public class FormulaCell extends Cell implements Observer{
 
     @Override
     public void update() {
-        if (circularDependency(this.coordinates)){
-            value = "Err";
+        boolean errorFound=false;
+        Spreadsheet spreadsheet = Spreadsheet.GetInstance();
+        for (String c:references){
+            if (spreadsheet.findCellAndReturn(c) instanceof FormulaCell){
+                if (spreadsheet.findCellAndReturn(c).textValue().equals("Error Formula")){
+                    errorFound=true;
+                }
+            }
+        }
+        if (circularDependency(this.coordinates)) {
+            value = "Error Circular Dependency";
+        }else if(this.tree instanceof ErrorTree){
+            value = "Error Formula";
+        }else if(errorFound){
+            value = "Error Formula";
         }else {
             value = tree.getValue() + "";
+        }
+        if (!circularDependency(this.coordinates)) {
+            notifySubscribers();
         }
     }
 
