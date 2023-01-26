@@ -19,8 +19,4 @@ public class TextCell extends Cell{
     public String textValue( ){
         return value;
     }
-    @Override
-    public double numericalValue( ){
-        return 999999999.1212126547384748437383738373837383734217238947123841239478129;
-    }
 }

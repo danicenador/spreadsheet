@@ -28,8 +28,6 @@ public class Cell{
             subscriber.update();
         }
     }
-    public void textContent(){}
-    public void numericalContent(){}
     public String textValue( ){
         return "";
     }
@@ -59,7 +57,4 @@ public class Cell{
         return subscribers;
     }
 
-    public void setSubscribers(ArrayList<Observer> subscribers) {
-        this.subscribers = subscribers;
-    }
 }

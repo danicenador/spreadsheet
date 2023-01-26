@@ -30,7 +30,4 @@ public class NumericalCell extends Cell{
         return value;
     }
 
-    public void setValue(double value) {
-        this.value = value;
-    }
 }

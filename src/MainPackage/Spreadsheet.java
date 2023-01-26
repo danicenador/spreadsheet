@@ -125,20 +125,9 @@ public class Spreadsheet {
         return cells;
     }
 
-    public void setCells(ArrayList<ArrayList<Cell>> cells) {
-        this.cells = cells;
-    }
-
-    public double getRowsNumber() {
-        return rowsNumber;
-    }
 
     public void setRowsNumber(int rowsNumber) {
         this.rowsNumber = rowsNumber;
-    }
-
-    public double getColumnsNumber() {
-        return columnsNumber;
     }
 
     public void setColumnsNumber(int columnsNumber) {

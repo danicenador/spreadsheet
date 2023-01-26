@@ -17,7 +17,4 @@ public abstract class Function implements FormulaTree {
         return inputs;
     }
 
-    public void setInputs(FormulaTree[] inputs) {
-        this.inputs = inputs;
-    }
 }

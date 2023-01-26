@@ -100,11 +100,6 @@ public class FormulaCell extends Cell implements Observer{
             spreadsheet.findCellAndReturn(coord).unsubscribe(this);
         }
     }
-    // Getters & Setters
-
-    public FormulaTree getTree() {
-        return tree;
-    }
 
     public void setTree(FormulaTree tree) {
         this.tree = tree;

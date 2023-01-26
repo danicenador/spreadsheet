@@ -80,9 +80,7 @@ public class Main {
             }
             java.lang.System.out.println("Input new content:");
             String newContent = scanner.nextLine();
-            if (!newContent.equals("")){
-                sis.spreadsheet.modifyCellContent(coordinates,newContent);
-            }
+            sis.spreadsheet.modifyCellContent(coordinates,newContent);
         }else{
             java.lang.System.out.println(ANSI_RED + "Invalid coordinates" + ANSI_RESET);
         }

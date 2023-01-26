@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static MainPackage.Utilities.IsCoordinates;
 import static MainPackage.Utilities.CoordinateTranslator;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class SystemTest {
 
@@ -32,17 +32,17 @@ class SystemTest {
         assertEquals(b[0], CoordinateTranslator(a)[0]);
         assertEquals(b[1], CoordinateTranslator(a)[1]);
         String c = "UVWXYZ5879";
-        assertEquals(true, IsCoordinates(c));
+        assertTrue(IsCoordinates(c));
         int[] d = CoordinateTranslator(c);
         assertEquals(Utilities.CoordinateTranslator(d),c);
-        assertEquals(false, IsCoordinates("This is any string"));
-        assertEquals(false, IsCoordinates("1A1"));
-        assertEquals(false, IsCoordinates("DF5.7"));
-        assertEquals(false, IsCoordinates("FF"));
-        assertEquals(false, IsCoordinates("G5H"));
-        assertEquals(true, IsCoordinates("A1"));
-        assertEquals(true, IsCoordinates("BC23"));
-        assertEquals(true, IsCoordinates("DEFHGJ09876"));
+        assertFalse(IsCoordinates("This is any string"));
+        assertFalse(IsCoordinates("1A1"));
+        assertFalse(IsCoordinates("DF5.7"));
+        assertFalse(IsCoordinates("FF"));
+        assertFalse(IsCoordinates("G5H"));
+        assertTrue(IsCoordinates("A1"));
+        assertTrue(IsCoordinates("BC23"));
+        assertTrue(IsCoordinates("DEFHGJ09876"));
     }
     @Test
     void test2() {  // Create cells
@@ -51,7 +51,6 @@ class SystemTest {
         assertEquals(5, SC.spreadsheet.findCellAndReturn("A1").numericalValue());
         SC.spreadsheet.modifyCellContent("ZZ520","texto");
         assertEquals("texto", SC.spreadsheet.findCellAndReturn("ZZ520").textValue());
-        // implement error           assertEquals(5, SC.spreadsheet.findCellAndReturn("ZZ520").numericalValue());
         SC.spreadsheet.modifyCellContent("D4","=529*3+1");
         assertEquals("1588.0", SC.spreadsheet.findCellAndReturn("D4").textValue());
         assertEquals(1588, SC.spreadsheet.findCellAndReturn("D4").numericalValue());
